@@ -2,15 +2,15 @@
 /**
  * IteratorAggregateTrait
  *
- * @author Sebastian Krein <sebastian@itstrategen.de>
+ * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\TruthTable\option;
+namespace Darealfive\Bitmask;
 
-use Darealfive\TruthTable\option\filter\Filterable;
-use Darealfive\TruthTable\option\filter\Type;
+use Darealfive\Bitmask\filter\Filterable;
+use Darealfive\Bitmask\filter\Type;
 
 trait IteratorAggregateTrait
 {

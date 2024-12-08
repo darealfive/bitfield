@@ -2,17 +2,17 @@
 /**
  * Filterable
  *
- * @author Sebastian Krein <sebastian@itstrategen.de>
+ * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\TruthTable\option\filter;
+namespace Darealfive\Bitmask\filter;
 
 /**
  * Interface Filterable
  *
- * @package Darealfive\TruthTable\option\filter
+ * @package Darealfive\Bitmask\filter
  */
 interface Filterable
 {

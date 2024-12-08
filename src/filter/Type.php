@@ -2,12 +2,12 @@
 /**
  * Type
  *
- * @author Sebastian Krein <sebastian@itstrategen.de>
+ * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\TruthTable\option\filter;
+namespace Darealfive\Bitmask\filter;
 
 enum Type
 {

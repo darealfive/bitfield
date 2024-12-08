@@ -2,12 +2,12 @@
 /**
  * Flag class file
  *
- * @author Sebastian Krein <sebastian@itstrategen.de>
+ * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\TruthTable\option;
+namespace Darealfive\Bitmask;
 
 use BackedEnum;
 use Countable;
@@ -21,7 +21,7 @@ use Stringable;
  * @see     FlaggableTrait
  * @see     Flaggable
  *
- * @package Darealfive\TruthTable\option
+ * @package Darealfive\Bitmask
  */
 final class Flag implements Flaggable, Countable, IteratorAggregate
 {

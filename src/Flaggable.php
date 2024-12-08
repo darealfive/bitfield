@@ -2,19 +2,19 @@
 /**
  * Flaggable
  *
- * @author Sebastian Krein <sebastian@itstrategen.de>
+ * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\TruthTable\option;
+namespace Darealfive\Bitmask;
 
 use IntBackedEnum;
 
 /**
  * Interface Flaggable defines a minimal set of methods to handle flags in a logical way.
  *
- * @package Darealfive\TruthTable\option
+ * @package Darealfive\Bitmask
  */
 interface Flaggable
 {
