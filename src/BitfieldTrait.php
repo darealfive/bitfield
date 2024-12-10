@@ -50,6 +50,21 @@ trait BitfieldTrait
     }
 
     /**
+     * Sets the bitfield.
+     *
+     * @param int|IntBackedEnum $bitfield
+     * @param bool $throw whether to throw an exception if given argument is not valid
+     *
+     * @return static
+     */
+    public function setBitfield(int|IntBackedEnum $bitfield, bool $throw = false): static
+    {
+        $this->_bitfield = self::validateBitfield($bitfield, $throw);
+
+        return $this;
+    }
+
+    /**
      * Gets the current bits as a list of <int> exponents mapped to either <int> 1 for "high" or <int> 0 for "low".
      *
      * @param Filterable|null $filterable optional filter to be applied on the returned bits
@@ -64,13 +79,6 @@ trait BitfieldTrait
         );
 
         return $filterable?->filter($type, ...$bits) ?: $bits;
-    }
-
-    public function setBitfield(int|IntBackedEnum $bitfield): static
-    {
-        $this->_bitfield = self::validateBitfield($bitfield);
-
-        return $this;
     }
 
     public function setFlag(int|IntBackedEnum $flag, int|IntBackedEnum ...$flags): static
@@ -129,6 +137,7 @@ trait BitfieldTrait
      *
      * @param int|IntBackedEnum $int
      * @param bool $throw whether to throw an exception instead of returning <false>
+     *
      * @return int|false the normalized representation of given argument
      */
     final public static function normalizeBit(int|IntBackedEnum $int, bool $throw = false): int|false
@@ -142,6 +151,7 @@ trait BitfieldTrait
      *
      * @param int $int
      * @param bool $throw whether to throw an exception instead of returning <false>
+     *
      * @return int|false given <int> if value is positive, <false> otherwise
      */
     final public static function validateBitfield(int $int, bool $throw = false): int|false
@@ -156,6 +166,7 @@ trait BitfieldTrait
      *
      * @param int $int
      * @param bool $throw whether to throw an exception instead of returning <false>
+     *
      * @return int|false given <int> if value is n² (a power of 2), <false> otherwise
      */
     final public static function validateBit(int $int, bool $throw = false): int|false
