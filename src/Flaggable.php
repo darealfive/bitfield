@@ -7,31 +7,31 @@
 
 declare(strict_types=1);
 
-namespace Darealfive\Bitmask;
+namespace Darealfive\Bitfield;
 
 use IntBackedEnum;
 
 /**
  * Interface Flaggable defines a minimal set of methods to handle flags in a logical way.
  *
- * @package Darealfive\Bitmask
+ * @package Darealfive\Bitfield
  */
 interface Flaggable
 {
     /**
      * Sets bits.
      *
-     * @param int|IntBackedEnum $bit     a bit to be set
-     * @param int|IntBackedEnum ...$bits additional bits to be set as well
+     * @param int|IntBackedEnum $flag a bit to be set
+     * @param int|IntBackedEnum ...$flags additional bits to be set as well
      *
      * @return static
      */
-    public function setFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static;
+    public function setFlag(int|IntBackedEnum $flag, int|IntBackedEnum ...$flags): static;
 
     /**
      * Adds bits.
      *
-     * @param int|IntBackedEnum $bit     a bit to be added
+     * @param int|IntBackedEnum $bit a bit to be added
      * @param int|IntBackedEnum ...$bits additional bits to be added as well
      *
      * @return static
@@ -41,7 +41,7 @@ interface Flaggable
     /**
      * Deletes bits.
      *
-     * @param int|IntBackedEnum $bit     a bit to be deleted
+     * @param int|IntBackedEnum $bit a bit to be deleted
      * @param int|IntBackedEnum ...$bits additional bits to be deleted as well
      *
      * @return static
@@ -51,7 +51,7 @@ interface Flaggable
     /**
      * Checks whether at least one of the provided bits is set.
      *
-     * @param int|IntBackedEnum $bit     a bit to be checked
+     * @param int|IntBackedEnum $bit a bit to be checked
      * @param int|IntBackedEnum ...$bits additional bits to be checked
      *
      * @return bool <TRUE> if at least one of the provided bits is set, <FALSE> otherwise.

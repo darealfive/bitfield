@@ -53,7 +53,12 @@ docker-tester-run-shell: ## Runs a shell within the testing docker container
 	@echo "│ Executing shell... │"
 	@echo "└────────────────────┘"
 	@printf "\e[0m"
-	@$(makefile_dir)run.sh dev-run-shell
+	@docker run \
+	-it \
+	--rm \
+	--entrypoint /bin/sh \
+	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
+	$(docker_image_name_tester)
 
 .PHONY: composer-install-dev
 composer-install-dev: ## Installs PHP dev dependencies

@@ -1,13 +1,13 @@
 <?php
 /**
- * Flag class file
+ * Bitfield class file
  *
  * @author Sebastian Krein <darealfive@gmx.de>
  */
 
 declare(strict_types=1);
 
-namespace Darealfive\Bitmask;
+namespace Darealfive\Bitfield;
 
 use BackedEnum;
 use Countable;
@@ -18,28 +18,27 @@ use Stringable;
 /**
  * Basic implementation of handling flags.
  *
- * @see     FlaggableTrait
+ * @see     BitfieldTrait
  * @see     Flaggable
  *
- * @package Darealfive\Bitmask
+ * @package Darealfive\Bitfield
  */
-final class Flag implements Flaggable, Countable, IteratorAggregate
+final class Bitfield implements Flaggable, Countable, IteratorAggregate
 {
     use CountableTrait, IteratorAggregateTrait;
 
     /**
-     * Ensures that {@link FlaggableTrait::$_bits} gets initialized within constructor.
+     * Ensures that {@link BitfieldTrait::$_bits} gets initialized within constructor.
      *
-     * @param int|IntBackedEnum $bit     a bit to be set
-     * @param int|IntBackedEnum ...$bits additional bits to be set as well
+     * @param int|IntBackedEnum $bitfield the bitfield to be set
      */
-    public function __construct(int|IntBackedEnum $bit = 0, int|IntBackedEnum ...$bits)
+    public function __construct(int|IntBackedEnum $bitfield = 0)
     {
-        $this->setFlag($bit, ...$bits);
+        $this->setBitfield($bitfield);
     }
 
     /**
-     * Instantiates flag.
+     * Instantiates a bitfield object from different typed arguments.
      * All values are converted to <string> (to support {@link Stringable}|{@link BackedEnum} types) and then back to
      * <int> as preparation for the constructor.
      *
@@ -57,7 +56,7 @@ final class Flag implements Flaggable, Countable, IteratorAggregate
             ...array_map(
                 intval(...),
                 array_map(
-                    static fn(int|float|bool|string|Stringable|BackedEnum $bit) => (string) ($bit instanceof BackedEnum)
+                    static fn(int|float|bool|string|Stringable|BackedEnum $bit) => (string)($bit instanceof BackedEnum)
                         ? $bit->value
                         : $bit,
                     $bits

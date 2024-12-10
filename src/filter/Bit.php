@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Darealfive\Bitmask\filter;
+namespace Darealfive\Bitfield\filter;
 
 enum Bit: int implements Filterable
 {

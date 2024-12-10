@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace Darealfive\Bitmask\filter;
+namespace Darealfive\Bitfield\filter;
 
 /**
  * Interface Filterable
  *
- * @package Darealfive\Bitmask\filter
+ * @package Darealfive\Bitfield\filter
  */
 interface Filterable
 {

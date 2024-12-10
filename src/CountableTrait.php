@@ -7,22 +7,22 @@
 
 declare(strict_types=1);
 
-namespace Darealfive\Bitmask;
+namespace Darealfive\Bitfield;
 
-use Darealfive\Bitmask\filter\Filterable;
-use Darealfive\Bitmask\filter\Type;
+use Darealfive\Bitfield\filter\Filterable;
+use Darealfive\Bitfield\filter\Type;
 
 trait CountableTrait
 {
-    use FlaggableTrait;
+    use BitfieldTrait;
 
     /**
      * Implements {@link \Countable} interface and optionally counts only values matching given filter.
      *
-     * @see FlaggableTrait::getFlags()
+     * @see BitfieldTrait::getBits()
      */
     public function count(Type $type = Type::ARRAY_FILTER_USE_VALUE, ?Filterable $filterable = null): int
     {
-        return count($this->getFlags($type, $filterable));
+        return count($this->getBits($type, $filterable));
     }
 }
