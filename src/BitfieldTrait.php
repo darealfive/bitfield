@@ -53,13 +53,12 @@ trait BitfieldTrait
      * Sets the bitfield.
      *
      * @param int|IntBackedEnum $bitfield
-     * @param bool $throw whether to throw an exception if given argument is not valid
      *
      * @return static
      */
-    public function setBitfield(int|IntBackedEnum $bitfield, bool $throw = false): static
+    public function setBitfield(int|IntBackedEnum $bitfield): static
     {
-        $this->_bitfield = self::validateBitfield($bitfield, $throw);
+        $this->_bitfield = self::validateBitfield($bitfield, true);
 
         return $this;
     }
@@ -140,7 +139,7 @@ trait BitfieldTrait
      *
      * @return int|false the normalized representation of given argument
      */
-    final public static function normalizeBit(int|IntBackedEnum $int, bool $throw = false): int|false
+    final public static function normalizeBit(int|IntBackedEnum $int, bool $throw = true): int|false
     {
         $int = is_int($int) ? $int : $int->value;
         return self::validateBit($int, $throw);

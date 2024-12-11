@@ -34,7 +34,7 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
      */
     public function __construct(int|IntBackedEnum $bitfield = 0)
     {
-        $this->setBitfield($bitfield, true);
+        $this->setBitfield($bitfield);
     }
 
     /**
