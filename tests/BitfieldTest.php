@@ -43,8 +43,6 @@ final class BitfieldTest extends TestCase
             ['value' => 4, 'result' => 4],
             ['value' => 5, 'result' => 5],
             ['value' => 9999, 'result' => 9999],
-            ['value' => 9999, 'result' => 9999],
-            ['value' => PHP_INT_MAX, 'result' => PHP_INT_MAX],
             ['value' => PHP_INT_MAX, 'result' => PHP_INT_MAX],
         ];
     }
@@ -54,9 +52,8 @@ final class BitfieldTest extends TestCase
         $class = DomainException::class;
         return [
             ['value' => -1, 'result' => $class],
-            ['value' => -1, 'result' => $class],
             ['value' => -9999, 'result' => $class],
-            ['value' => -9999, 'result' => $class],
+            ['value' => -PHP_INT_MAX, 'result' => $class],
         ];
     }
 }
