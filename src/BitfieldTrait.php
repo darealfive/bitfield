@@ -80,9 +80,9 @@ trait BitfieldTrait
         return $filterable?->filter($type, ...$bits) ?: $bits;
     }
 
-    public function setFlag(int|IntBackedEnum $flag, int|IntBackedEnum ...$flags): static
+    public function setFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static
     {
-        return $this->setBitfield(self::sumBits($flag, ...$flags));
+        return $this->setBitfield(self::sumBits($bit, ...$bits));
     }
 
     public function addFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static

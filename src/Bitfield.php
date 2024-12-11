@@ -51,17 +51,18 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
                                 int|float|bool|string|Stringable|BackedEnum ...$bits): self
     {
         $bits[] = $bit;
-
         return new self(
-            ...array_map(
-                intval(...),
-                array_map(
-                    static fn(int|float|bool|string|Stringable|BackedEnum $bit) => (string)($bit instanceof BackedEnum)
-                        ? $bit->value
-                        : $bit,
+            self::sumBits(
+                ...array_map(
+                    self::sanitize(...),
                     $bits
                 )
             )
         );
+    }
+
+    public static function sanitize(int|float|bool|string|Stringable|BackedEnum $bit): int
+    {
+        return (int)(string)(($bit instanceof BackedEnum) ? $bit->value : $bit);
     }
 }

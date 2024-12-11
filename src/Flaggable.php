@@ -21,12 +21,12 @@ interface Flaggable
     /**
      * Sets bits.
      *
-     * @param int|IntBackedEnum $flag a bit to be set
-     * @param int|IntBackedEnum ...$flags additional bits to be set as well
+     * @param int|IntBackedEnum $bit a bit to be set
+     * @param int|IntBackedEnum ...$bits additional bits to be set as well
      *
      * @return static
      */
-    public function setFlag(int|IntBackedEnum $flag, int|IntBackedEnum ...$flags): static;
+    public function setFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static;
 
     /**
      * Adds bits.
