@@ -28,7 +28,7 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
     use CountableTrait, IteratorAggregateTrait;
 
     /**
-     * Ensures that {@link BitfieldTrait::$_bits} gets initialized within constructor.
+     * New object from bitfield allows setting multiple bits at once.
      *
      * @param int|IntBackedEnum $bitfield the bitfield to be set
      */
@@ -38,17 +38,16 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
     }
 
     /**
-     * Instantiates a bitfield object from different typed arguments.
-     * All values are converted to <string> (to support {@link Stringable}|{@link BackedEnum} types) and then back to
-     * <int> as preparation for the constructor.
+     * Instantiates a bitfield object from various typed arguments.
+     * The bitfield gets build by BOOLEAN OR adding those bits together.
      *
      * @param int|float|bool|string|Stringable|BackedEnum $bit
      * @param int|float|bool|string|Stringable|BackedEnum ...$bits
      *
      * @return self
      */
-    public static function from(int|float|bool|string|Stringable|BackedEnum $bit,
-                                int|float|bool|string|Stringable|BackedEnum ...$bits): self
+    public static function fromBits(int|float|bool|string|Stringable|BackedEnum $bit,
+                                    int|float|bool|string|Stringable|BackedEnum ...$bits): self
     {
         $bits[] = $bit;
         return new self(
