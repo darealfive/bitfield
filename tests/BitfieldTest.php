@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'Bit.php';
+
 use Darealfive\Bitfield\Bitfield;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +20,7 @@ final class BitfieldTest extends TestCase
 {
     #[DataProvider('dataproviderValidConstructorArguments')]
     #[DataProvider('dataproviderInvalidConstructorArguments')]
-    public function testConstructor(int $value, int|string $result): void
+    public function testConstructor(mixed $value, int|string $result): void
     {
         if (is_string($result)) {
 
@@ -94,42 +96,6 @@ final class BitfieldTest extends TestCase
         }
     }
 
-    #[DataProvider('dataproviderBitfieldHasFlags')]
-    public function testBitfieldHasFlags(int $bitfield, Bit ...$flags): void
-    {
-        $this->assertTrue(
-            (new Bitfield($bitfield))->hasFlags(...$flags),
-        );
-    }
-
-    #[DataProvider('dataproviderBitfieldHasNotFlags')]
-    public function testBitfieldHasNotFlags(int $bitfield, Bit ...$flags): void
-    {
-        $this->assertFalse(
-            (new Bitfield($bitfield))->hasFlags(...$flags),
-        );
-    }
-
-    #[DataProvider('dataproviderBitfieldHasFlags')]
-    public function testBitfieldHasFlag(int $bitfield, Bit...$flags): void
-    {
-        foreach ($flags as $flag) {
-            $this->assertTrue(
-                (new Bitfield($bitfield))->hasFlag($flag),
-            );
-        }
-    }
-
-    #[DataProvider('dataproviderBitfieldHasNotFlags')]
-    public function testBitfieldHasNotFlag(int $bitfield, Bit...$flags): void
-    {
-        foreach ($flags as $flag) {
-            $this->assertFalse(
-                (new Bitfield($bitfield))->hasFlag($flag),
-            );
-        }
-    }
-
     public static function dataproviderValidConstructorArguments(): array
     {
         return [
@@ -147,12 +113,11 @@ final class BitfieldTest extends TestCase
 
     public static function dataproviderInvalidConstructorArguments(): array
     {
-        $class = DomainException::class;
-
         return [
-            ['value' => -1, 'result' => $class],
+            ['value' => -1, 'result' => ($class = DomainException::class)],
             ['value' => -9999, 'result' => $class],
             ['value' => -PHP_INT_MAX, 'result' => $class],
+            ['value' => Bit::D_16, 'result' => TypeError::class],
         ];
     }
 
@@ -209,38 +174,6 @@ final class BitfieldTest extends TestCase
         ];
     }
 
-    public static function dataproviderBitfieldHasFlags(): array
-    {
-        return [
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
-            ],
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_4, Bit::D_8
-            ],
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_8
-            ],
-        ];
-    }
-
-    public static function dataproviderBitfieldHasNotFlags(): array
-    {
-        return [
-            [
-                'bitfield' => 16,
-                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8
-            ],
-            [
-                'decimal' => 1,
-                Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
-            ],
-        ];
-    }
-
     public static function stringable(mixed $value): Stringable
     {
         return new class($value) implements Stringable {
@@ -254,13 +187,4 @@ final class BitfieldTest extends TestCase
             }
         };
     }
-}
-
-enum Bit: int
-{
-    case D_1 = 1 << 0;
-    case D_2 = 1 << 1;
-    case D_4 = 1 << 2;
-    case D_8 = 1 << 3;
-    case D_16 = 1 << 4;
 }

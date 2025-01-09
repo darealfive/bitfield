@@ -53,11 +53,11 @@ trait BitfieldTrait
     /**
      * Sets the bitfield.
      *
-     * @param int|BackedEnum $bitfield
+     * @param int $bitfield
      *
      * @return static
      */
-    public function setBitfield(int|BackedEnum $bitfield): static
+    public function setBitfield(int $bitfield): static
     {
         $this->_bitfield = self::validateBitfield($bitfield, true);
 

@@ -11,7 +11,6 @@ namespace Darealfive\Bitfield;
 
 use BackedEnum;
 use Countable;
-use IntBackedEnum;
 use IteratorAggregate;
 use Stringable;
 
@@ -30,9 +29,9 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
     /**
      * New object from bitfield allows setting multiple bits at once.
      *
-     * @param int|IntBackedEnum $bitfield the bitfield to be set
+     * @param int $bitfield the bitfield to be set
      */
-    public function __construct(int|IntBackedEnum $bitfield = 0)
+    public function __construct(int $bitfield = 0)
     {
         $this->setBitfield($bitfield);
     }
