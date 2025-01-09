@@ -10,7 +10,7 @@ help:
 makefile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 makefile_dir := $(dir $(makefile_path))
 docker_image_version := v1.0.0
-docker_image_name_tester := darealfive/bitmask-tester:$(docker_image_version)
+docker_image_name_tester := darealfive/bitfield-tester:$(docker_image_version)
 docker_image_working_dir := /php_library
 
 
