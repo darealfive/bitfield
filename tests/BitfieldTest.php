@@ -86,11 +86,47 @@ final class BitfieldTest extends TestCase
 
             if ($value instanceof Stringable) {
 
-                $value = (string)$value;
+                $value = (string) $value;
             } elseif ($value instanceof BackedEnum) {
                 $value = $value->value;
             }
             $this->assertEqualsWithDelta($value, $sanitized, 0.9);
+        }
+    }
+
+    #[DataProvider('dataproviderBitfieldHasFlags')]
+    public function testBitfieldHasFlags(int $bitfield, Bit ...$flags): void
+    {
+        $this->assertTrue(
+            (new Bitfield($bitfield))->hasFlags(...$flags),
+        );
+    }
+
+    #[DataProvider('dataproviderBitfieldHasNotFlags')]
+    public function testBitfieldHasNotFlags(int $bitfield, Bit ...$flags): void
+    {
+        $this->assertFalse(
+            (new Bitfield($bitfield))->hasFlags(...$flags),
+        );
+    }
+
+    #[DataProvider('dataproviderBitfieldHasFlags')]
+    public function testBitfieldHasFlag(int $bitfield, Bit...$flags): void
+    {
+        foreach ($flags as $flag) {
+            $this->assertTrue(
+                (new Bitfield($bitfield))->hasFlag($flag),
+            );
+        }
+    }
+
+    #[DataProvider('dataproviderBitfieldHasNotFlags')]
+    public function testBitfieldHasNotFlag(int $bitfield, Bit...$flags): void
+    {
+        foreach ($flags as $flag) {
+            $this->assertFalse(
+                (new Bitfield($bitfield))->hasFlag($flag),
+            );
         }
     }
 
@@ -112,6 +148,7 @@ final class BitfieldTest extends TestCase
     public static function dataproviderInvalidConstructorArguments(): array
     {
         $class = DomainException::class;
+
         return [
             ['value' => -1, 'result' => $class],
             ['value' => -9999, 'result' => $class],
@@ -141,13 +178,16 @@ final class BitfieldTest extends TestCase
     {
         return [
             [
-                false, 0, '0', 0.0, '0.0', self::stringable(0), self::stringable('0'), self::stringable(0.0), self::stringable('0.0'), self::stringable(self::stringable(0))
+                false, 0, '0', 0.0, '0.0', self::stringable(0), self::stringable('0'), self::stringable(0.0),
+                self::stringable('0.0'), self::stringable(self::stringable(0))
             ],
             [
-                true, 1, '1', 1.1, '1.1', Bit::D_1, self::stringable(1), self::stringable('1'), self::stringable(1.1), self::stringable('1.1'), self::stringable(self::stringable(1))
+                true, 1, '1', 1.1, '1.1', Bit::D_1, self::stringable(1), self::stringable('1'), self::stringable(1.1),
+                self::stringable('1.1'), self::stringable(self::stringable(1))
             ],
             [
-                16, '16', 16.16, '16.16', Bit::D_16, self::stringable(16), self::stringable('16'), self::stringable(16.16), self::stringable('16.16'), self::stringable(self::stringable(16))
+                16, '16', 16.16, '16.16', Bit::D_16, self::stringable(16), self::stringable('16'),
+                self::stringable(16.16), self::stringable('16.16'), self::stringable(self::stringable(16))
             ],
         ];
     }
@@ -156,14 +196,48 @@ final class BitfieldTest extends TestCase
     {
         return [
             [
-                3, '3', 3.3, '3.3', self::stringable(3), self::stringable('3'), self::stringable(3.3), self::stringable('3.3'), self::stringable(self::stringable(3))
+                3, '3', 3.3, '3.3', self::stringable(3), self::stringable('3'), self::stringable(3.3),
+                self::stringable('3.3'), self::stringable(self::stringable(3))
             ],
             [
-                255, '255', 255.255, '255.255', self::stringable(255), self::stringable('255'), self::stringable(255.255), self::stringable('255.255'), self::stringable(self::stringable(255))
+                255, '255', 255.255, '255.255', self::stringable(255), self::stringable('255'),
+                self::stringable(255.255), self::stringable('255.255'), self::stringable(self::stringable(255))
             ],
             // BIT's are also treated as BITFIELD's.
             // All single BIT's are BITFIELD, but not all BITFIELDS represents as a single BIT.
             ...self::dataproviderEqualBits()
+        ];
+    }
+
+    public static function dataproviderBitfieldHasFlags(): array
+    {
+        return [
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_4, Bit::D_8
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_8
+            ],
+        ];
+    }
+
+    public static function dataproviderBitfieldHasNotFlags(): array
+    {
+        return [
+            [
+                'bitfield' => 16,
+                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8
+            ],
+            [
+                'decimal' => 1,
+                Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
         ];
     }
 
@@ -176,7 +250,7 @@ final class BitfieldTest extends TestCase
 
             public function __toString(): string
             {
-                return (string)$this->value;
+                return (string) $this->value;
             }
         };
     }

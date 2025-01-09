@@ -12,7 +12,8 @@ namespace Darealfive\Bitfield;
 use Darealfive\Bitfield\filter\Filterable;
 use Darealfive\Bitfield\filter\Type;
 use DomainException;
-use IntBackedEnum;
+use BackedEnum;
+use Stringable;
 
 /**
  * Trait BitfieldTrait implements the {@link Flaggable} interface.
@@ -52,11 +53,11 @@ trait BitfieldTrait
     /**
      * Sets the bitfield.
      *
-     * @param int|IntBackedEnum $bitfield
+     * @param int|BackedEnum $bitfield
      *
      * @return static
      */
-    public function setBitfield(int|IntBackedEnum $bitfield): static
+    public function setBitfield(int|BackedEnum $bitfield): static
     {
         $this->_bitfield = self::validateBitfield($bitfield, true);
 
@@ -80,22 +81,22 @@ trait BitfieldTrait
         return $filterable?->filter($type, ...$bits) ?: $bits;
     }
 
-    public function setFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static
+    public function setFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static
     {
         return $this->setBitfield(self::sumBits($bit, ...$bits));
     }
 
-    public function addFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static
+    public function addFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static
     {
         return $this->setFlag($this->getBitfield() | self::sumBits($bit, ...$bits));
     }
 
-    public function delFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): static
+    public function delFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static
     {
         return $this->setFlag($this->getBitfield() & ~self::sumBits($bit, ...$bits));
     }
 
-    public function hasFlag(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): bool
+    public function hasFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): bool
     {
         return ($this->getBitfield() & self::sumBits($bit, ...$bits)) !== 0;
     }
@@ -103,12 +104,12 @@ trait BitfieldTrait
     /**
      * Checks whether all particular bits are set.
      *
-     * @param int|IntBackedEnum $bit a bit to be checked
-     * @param int|IntBackedEnum ...$bits additional bits to be checked
+     * @param int|BackedEnum $bit     a bit to be checked
+     * @param int|BackedEnum ...$bits additional bits to be checked
      *
      * @return bool <TRUE> if all provided bits are set, <FALSE> otherwise.
      */
-    public function hasFlags(int|IntBackedEnum $bit, int|IntBackedEnum ...$bits): bool
+    public function hasFlags(int|BackedEnum $bit, int|BackedEnum ...$bits): bool
     {
         $bits[] = $bit;
 
@@ -118,12 +119,12 @@ trait BitfieldTrait
     /**
      * Sum of given bits.
      *
-     * @param int|IntBackedEnum $bit
-     * @param int|IntBackedEnum ...$bits
+     * @param int|BackedEnum $bit
+     * @param int|BackedEnum ...$bits
      *
      * @return int the decimal sum of all given bits.
      */
-    final public static function sumBits(int|IntBackedEnum $bit, int|IntBackedEnum  ...$bits): int
+    final public static function sumBits(int|BackedEnum $bit, int|BackedEnum  ...$bits): int
     {
         return array_sum(array_map(
             self::normalizeBit(...),
@@ -132,23 +133,34 @@ trait BitfieldTrait
     }
 
     /**
-     * Converts IntBackedEnum to <int> and ensures that it represents an exact value of n² (any power of 2).
+     * Converts BackedEnum to <int> and ensures that it represents an exact value of n² (any power of 2).
      *
-     * @param int|IntBackedEnum $int
-     * @param bool $throw whether to throw an exception instead of returning <false>
+     * @param int|BackedEnum $int
+     * @param bool           $throw whether to throw an exception instead of returning <false>
      *
      * @return int|false the normalized representation of given argument
      */
-    final public static function normalizeBit(int|IntBackedEnum $int, bool $throw = true): int|false
+    final public static function normalizeBit(int|BackedEnum $int, bool $throw = true): int|false
     {
-        $int = is_int($int) ? $int : $int->value;
-        return self::validateBit($int, $throw);
+        return self::validateBit(self::sanitize($int), $throw);
+    }
+
+    /**
+     * Converts different typed arguments to <int>
+     *
+     * @param int|float|bool|string|Stringable|BackedEnum $bit
+     *
+     * @return int the integer representation
+     */
+    final public static function sanitize(int|float|bool|string|Stringable|BackedEnum $bit): int
+    {
+        return (int) (string) (($bit instanceof BackedEnum) ? $bit->value : $bit);
     }
 
     /**
      * Validates given value to be usable within a bitfield, which is the case if it is positive.
      *
-     * @param int $int
+     * @param int  $int
      * @param bool $throw whether to throw an exception instead of returning <false>
      *
      * @return int|false given <int> if value is positive, <false> otherwise
@@ -163,7 +175,7 @@ trait BitfieldTrait
     /**
      * Validates given value by checking if it is of n² (any power of 2).
      *
-     * @param int $int
+     * @param int  $int
      * @param bool $throw whether to throw an exception instead of returning <false>
      *
      * @return int|false given <int> if value is n² (a power of 2), <false> otherwise
