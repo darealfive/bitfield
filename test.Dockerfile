@@ -2,9 +2,9 @@
 # The above line freezes dockerfile frontend syntax/features being available when using buildkit: https://hub.docker.com/r/docker/dockerfile
 
 # Specifies the composer image used to install PHP dependencies
-ARG COMPOSER_VERSION=2.7.6
+ARG COMPOSER_VERSION
 # Specifies the PHP image used to execute tests
-ARG PHP_VERSION=8.2.19-cli-alpine3.20
+ARG PHP_VERSION
 ############
 # composer #
 ############
