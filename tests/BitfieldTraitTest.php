@@ -72,6 +72,12 @@ final class BitfieldTraitTest extends TestCase
         $this->assertSame(decbin($integer), (new Bitfield($integer))->getBinary());
     }
 
+    #[DataProvider('dataproviderSumBits')]
+    public function testSumBits(int $result, int ...$bits): void
+    {
+        $this->assertSame($result, Bitfield::sumBits(...$bits));
+    }
+
     public static function dataproviderValidBitfields(): array
     {
         return [
@@ -164,6 +170,48 @@ final class BitfieldTraitTest extends TestCase
             [
                 'bitfield' => 1,
                 Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
+        ];
+    }
+
+    public static function dataproviderSumBits(): array
+    {
+        return [
+            [
+                'result' => 0,
+                0
+            ],
+            [
+                'result' => 1,
+                1
+            ],
+            [
+                'result' => 1,
+                1, 1
+            ],
+            [
+                'result' => 3,
+                1, 2
+            ],
+            [
+                'result' => 3,
+                1, 2, 2
+            ],
+            [
+                'result' => 5,
+                1, 4, 4, 1
+            ],
+            [
+                'result' => 14,
+                2, 8, 8, 4
+            ],
+            [
+                'result' => 128,
+                128
+            ],
+            [
+                'result' => 1168,
+                16, 1024, 128, 1024
             ],
         ];
     }

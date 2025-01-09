@@ -117,19 +117,22 @@ trait BitfieldTrait
     }
 
     /**
-     * Sum of given bits.
+     * Sum of given bits. Because we treat arguments as real "bits", this method only sums unique values.
+     * E.g.:
+     * Input: 2,8,8,4
+     * Output: 14 (2+8+4)
      *
      * @param int|BackedEnum $bit
      * @param int|BackedEnum ...$bits
      *
-     * @return int the decimal sum of all given bits.
+     * @return int the decimal sum of all given (unique) bits.
      */
     final public static function sumBits(int|BackedEnum $bit, int|BackedEnum  ...$bits): int
     {
-        return array_sum(array_map(
+        return array_sum(array_unique(array_map(
             self::normalizeBit(...),
             array_merge($bits, [$bit])
-        ));
+        )));
     }
 
     /**
