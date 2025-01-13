@@ -14,7 +14,7 @@ use Darealfive\Bitfield\filter\Type;
 
 trait CountableTrait
 {
-    use BitfieldTrait;
+    use FlaggableTrait;
 
     /**
      * Implements {@link \Countable} interface and optionally counts only values matching given filter.

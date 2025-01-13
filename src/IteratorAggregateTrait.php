@@ -14,7 +14,7 @@ use Darealfive\Bitfield\filter\Type;
 
 trait IteratorAggregateTrait
 {
-    use BitfieldTrait;
+    use FlaggableTrait;
 
     /**
      * Implements {@link \IteratorAggregate} interface and optionally iterates only over values matching given filter.

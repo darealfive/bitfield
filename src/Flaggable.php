@@ -21,7 +21,7 @@ interface Flaggable
     /**
      * Sets bits.
      *
-     * @param int|BackedEnum $bit a bit to be set
+     * @param int|BackedEnum $bit     a bit to be set
      * @param int|BackedEnum ...$bits additional bits to be set as well
      *
      * @return static
@@ -31,7 +31,7 @@ interface Flaggable
     /**
      * Adds bits.
      *
-     * @param int|BackedEnum $bit a bit to be added
+     * @param int|BackedEnum $bit     a bit to be added
      * @param int|BackedEnum ...$bits additional bits to be added as well
      *
      * @return static
@@ -41,7 +41,7 @@ interface Flaggable
     /**
      * Deletes bits.
      *
-     * @param int|BackedEnum $bit a bit to be deleted
+     * @param int|BackedEnum $bit     a bit to be deleted
      * @param int|BackedEnum ...$bits additional bits to be deleted as well
      *
      * @return static
@@ -51,7 +51,7 @@ interface Flaggable
     /**
      * Checks whether at least one of the provided bits is set.
      *
-     * @param int|BackedEnum $bit a bit to be checked
+     * @param int|BackedEnum $bit     a bit to be checked
      * @param int|BackedEnum ...$bits additional bits to be checked
      *
      * @return bool <TRUE> if at least one of the provided bits is set, <FALSE> otherwise.

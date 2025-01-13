@@ -15,10 +15,11 @@ use IteratorAggregate;
 use Stringable;
 
 /**
- * Basic implementation of handling flags.
+ * Class Bitfield aggregates traits to handle bitfields.
  *
- * @see     BitfieldTrait
- * @see     Flaggable
+ * @see     CountableTrait
+ * @see     IteratorAggregateTrait
+ * Both traits implements implicitly the {@link Flaggable} interface via its {@link FlaggableTrait}
  *
  * @package Darealfive\Bitfield
  */

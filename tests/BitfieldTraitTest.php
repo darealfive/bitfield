@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'DataproviderTrait.php';
-
 use Darealfive\Bitfield\Bitfield;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -18,8 +16,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class BitfieldTraitTest extends TestCase
 {
-    use DataproviderTrait;
-
     #[DataProvider('dataproviderValidBits')]
     #[DataProvider('dataproviderInvalidBits')]
     public function testValidateBit(int $value, bool|int|string $result, bool $throw): void
@@ -42,34 +38,6 @@ final class BitfieldTraitTest extends TestCase
         }
 
         $this->assertSame($result, Bitfield::validateBitfield($value, $throw));
-    }
-
-    #[DataProvider('dataproviderBitfieldHasFlags')]
-    public function testBitfieldHasFlags(int $bitfield, BackedEnum ...$flags): void
-    {
-        $this->assertTrue(
-            (new Bitfield($bitfield))->hasFlags(...$flags),
-        );
-    }
-
-    #[DataProvider('dataproviderBitfieldHasNotFlags')]
-    public function testBitfieldHasNotFlags(int $bitfield, BackedEnum ...$flags): void
-    {
-        $this->assertFalse(
-            (new Bitfield($bitfield))->hasFlags(...$flags),
-        );
-    }
-
-    #[DataProvider('dataproviderIntegers')]
-    public function testGetBitfield(int $integer): void
-    {
-        $this->assertSame($integer, (new Bitfield($integer))->getBitfield());
-    }
-
-    #[DataProvider('dataproviderIntegers')]
-    public function testGetBinary(int $integer): void
-    {
-        $this->assertSame(decbin($integer), (new Bitfield($integer))->getBinary());
     }
 
     #[DataProvider('dataproviderSumBits')]
@@ -139,38 +107,6 @@ final class BitfieldTraitTest extends TestCase
             ['value' => -4096, 'result' => $class, 'throw' => true],
             ['value' => -4097, 'result' => false, 'throw' => false],
             ['value' => -4097, 'result' => $class, 'throw' => true],
-        ];
-    }
-
-    public static function dataproviderBitfieldHasFlags(): array
-    {
-        return [
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
-            ],
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_4, Bit::D_8
-            ],
-            [
-                'bitfield' => 1 + 2 + 4 + 8 + 16,
-                Bit::D_8
-            ],
-        ];
-    }
-
-    public static function dataproviderBitfieldHasNotFlags(): array
-    {
-        return [
-            [
-                'bitfield' => 16,
-                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8
-            ],
-            [
-                'bitfield' => 1,
-                Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
-            ],
         ];
     }
 

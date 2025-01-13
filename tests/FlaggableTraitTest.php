@@ -18,10 +18,33 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class FlaggableTest covers interface methods of {@link Flaggable}
  */
-final class FlaggableTest extends TestCase
+final class FlaggableTraitTest extends TestCase
 {
-
     use DataproviderTrait;
+
+    #[DataProvider('dataproviderBitfieldHasFlags')]
+    public function testBitfieldHasFlags(int $bitfield, BackedEnum ...$flags): void
+    {
+        $this->assertTrue((new Bitfield($bitfield))->hasFlags(...$flags));
+    }
+
+    #[DataProvider('dataproviderBitfieldHasNotFlags')]
+    public function testBitfieldHasNotFlags(int $bitfield, BackedEnum ...$flags): void
+    {
+        $this->assertFalse((new Bitfield($bitfield))->hasFlags(...$flags));
+    }
+
+    #[DataProvider('dataproviderIntegers')]
+    public function testGetBitfield(int $integer): void
+    {
+        $this->assertSame($integer, (new Bitfield($integer))->getBitfield());
+    }
+
+    #[DataProvider('dataproviderIntegers')]
+    public function testGetBinary(int $integer): void
+    {
+        $this->assertSame(decbin($integer), (new Bitfield($integer))->getBinary());
+    }
 
     /**
      * Tests that "setFlag" overwrites existing flags with the desired flag
@@ -82,6 +105,38 @@ final class FlaggableTest extends TestCase
                 $this->assertFalse($flaggable->hasFlag($flag));
             }
         }
+    }
+
+    public static function dataproviderBitfieldHasFlags(): array
+    {
+        return [
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_4, Bit::D_8
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_8
+            ],
+        ];
+    }
+
+    public static function dataproviderBitfieldHasNotFlags(): array
+    {
+        return [
+            [
+                'bitfield' => 16,
+                Bit::D_1, Bit::D_2, Bit::D_4, Bit::D_8
+            ],
+            [
+                'bitfield' => 1,
+                Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
+        ];
     }
 
     private static function instantiateFlaggable(int $bitfield): Flaggable
