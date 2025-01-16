@@ -7,6 +7,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'Bit.php';
+
 use Darealfive\Bitfield\Bitfield;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +20,7 @@ final class BitfieldTest extends TestCase
 {
     #[DataProvider('dataproviderValidConstructorArguments')]
     #[DataProvider('dataproviderInvalidConstructorArguments')]
-    public function testConstructor(int $value, int|string $result): void
+    public function testConstructor(mixed $value, int|string $result): void
     {
         if (is_string($result)) {
 
@@ -86,7 +88,7 @@ final class BitfieldTest extends TestCase
 
             if ($value instanceof Stringable) {
 
-                $value = (string)$value;
+                $value = (string) $value;
             } elseif ($value instanceof BackedEnum) {
                 $value = $value->value;
             }
@@ -111,11 +113,11 @@ final class BitfieldTest extends TestCase
 
     public static function dataproviderInvalidConstructorArguments(): array
     {
-        $class = DomainException::class;
         return [
-            ['value' => -1, 'result' => $class],
+            ['value' => -1, 'result' => ($class = DomainException::class)],
             ['value' => -9999, 'result' => $class],
             ['value' => -PHP_INT_MAX, 'result' => $class],
+            ['value' => Bit::D_16, 'result' => TypeError::class],
         ];
     }
 
@@ -141,13 +143,16 @@ final class BitfieldTest extends TestCase
     {
         return [
             [
-                false, 0, '0', 0.0, '0.0', self::stringable(0), self::stringable('0'), self::stringable(0.0), self::stringable('0.0'), self::stringable(self::stringable(0))
+                false, 0, '0', 0.0, '0.0', self::stringable(0), self::stringable('0'), self::stringable(0.0),
+                self::stringable('0.0'), self::stringable(self::stringable(0))
             ],
             [
-                true, 1, '1', 1.1, '1.1', Bit::D_1, self::stringable(1), self::stringable('1'), self::stringable(1.1), self::stringable('1.1'), self::stringable(self::stringable(1))
+                true, 1, '1', 1.1, '1.1', Bit::D_1, self::stringable(1), self::stringable('1'), self::stringable(1.1),
+                self::stringable('1.1'), self::stringable(self::stringable(1))
             ],
             [
-                16, '16', 16.16, '16.16', Bit::D_16, self::stringable(16), self::stringable('16'), self::stringable(16.16), self::stringable('16.16'), self::stringable(self::stringable(16))
+                16, '16', 16.16, '16.16', Bit::D_16, self::stringable(16), self::stringable('16'),
+                self::stringable(16.16), self::stringable('16.16'), self::stringable(self::stringable(16))
             ],
         ];
     }
@@ -156,10 +161,12 @@ final class BitfieldTest extends TestCase
     {
         return [
             [
-                3, '3', 3.3, '3.3', self::stringable(3), self::stringable('3'), self::stringable(3.3), self::stringable('3.3'), self::stringable(self::stringable(3))
+                3, '3', 3.3, '3.3', self::stringable(3), self::stringable('3'), self::stringable(3.3),
+                self::stringable('3.3'), self::stringable(self::stringable(3))
             ],
             [
-                255, '255', 255.255, '255.255', self::stringable(255), self::stringable('255'), self::stringable(255.255), self::stringable('255.255'), self::stringable(self::stringable(255))
+                255, '255', 255.255, '255.255', self::stringable(255), self::stringable('255'),
+                self::stringable(255.255), self::stringable('255.255'), self::stringable(self::stringable(255))
             ],
             // BIT's are also treated as BITFIELD's.
             // All single BIT's are BITFIELD, but not all BITFIELDS represents as a single BIT.
@@ -176,17 +183,8 @@ final class BitfieldTest extends TestCase
 
             public function __toString(): string
             {
-                return (string)$this->value;
+                return (string) $this->value;
             }
         };
     }
-}
-
-enum Bit: int
-{
-    case D_1 = 1 << 0;
-    case D_2 = 1 << 1;
-    case D_4 = 1 << 2;
-    case D_8 = 1 << 3;
-    case D_16 = 1 << 4;
 }

@@ -11,15 +11,15 @@ namespace Darealfive\Bitfield;
 
 use BackedEnum;
 use Countable;
-use IntBackedEnum;
 use IteratorAggregate;
 use Stringable;
 
 /**
- * Basic implementation of handling flags.
+ * Class Bitfield aggregates traits to handle bitfields.
  *
- * @see     BitfieldTrait
- * @see     Flaggable
+ * @see     CountableTrait
+ * @see     IteratorAggregateTrait
+ * Both traits implements implicitly the {@link Flaggable} interface via its {@link FlaggableTrait}
  *
  * @package Darealfive\Bitfield
  */
@@ -30,9 +30,9 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
     /**
      * New object from bitfield allows setting multiple bits at once.
      *
-     * @param int|IntBackedEnum $bitfield the bitfield to be set
+     * @param int $bitfield the bitfield to be set
      */
-    public function __construct(int|IntBackedEnum $bitfield = 0)
+    public function __construct(int $bitfield = 0)
     {
         $this->setBitfield($bitfield);
     }
@@ -50,6 +50,7 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
                                     int|float|bool|string|Stringable|BackedEnum ...$bits): self
     {
         $bits[] = $bit;
+
         return new self(
             self::sumBits(
                 ...array_map(
@@ -58,10 +59,5 @@ final class Bitfield implements Flaggable, Countable, IteratorAggregate
                 )
             )
         );
-    }
-
-    public static function sanitize(int|float|bool|string|Stringable|BackedEnum $bit): int
-    {
-        return (int)(string)(($bit instanceof BackedEnum) ? $bit->value : $bit);
     }
 }

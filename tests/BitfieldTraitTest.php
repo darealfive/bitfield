@@ -5,12 +5,14 @@
  * @author Sebastian Krein <darealfive@gmx.de>
  */
 
+declare(strict_types=1);
+
 use Darealfive\Bitfield\Bitfield;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class BitfieldTraitTest
+ * Class BitfieldTraitTest covers trait methods of {@link \Darealfive\Bitfield\BitfieldTrait}
  */
 final class BitfieldTraitTest extends TestCase
 {
@@ -38,6 +40,12 @@ final class BitfieldTraitTest extends TestCase
         $this->assertSame($result, Bitfield::validateBitfield($value, $throw));
     }
 
+    #[DataProvider('dataproviderSumBits')]
+    public function testSumBits(int $result, int ...$bits): void
+    {
+        $this->assertSame($result, Bitfield::sumBits(...$bits));
+    }
+
     public static function dataproviderValidBitfields(): array
     {
         return [
@@ -55,6 +63,7 @@ final class BitfieldTraitTest extends TestCase
     public static function dataproviderInvalidBitfields(): array
     {
         $class = DomainException::class;
+
         return [
             ['value' => -1, 'result' => false, 'throw' => false],
             ['value' => -1, 'result' => $class, 'throw' => true],
@@ -82,6 +91,7 @@ final class BitfieldTraitTest extends TestCase
     public static function dataproviderInvalidBits(): array
     {
         $class = DomainException::class;
+
         return [
             ['value' => 3, 'result' => false, 'throw' => false],
             ['value' => 3, 'result' => $class, 'throw' => true],
@@ -97,6 +107,48 @@ final class BitfieldTraitTest extends TestCase
             ['value' => -4096, 'result' => $class, 'throw' => true],
             ['value' => -4097, 'result' => false, 'throw' => false],
             ['value' => -4097, 'result' => $class, 'throw' => true],
+        ];
+    }
+
+    public static function dataproviderSumBits(): array
+    {
+        return [
+            [
+                'result' => 0,
+                0
+            ],
+            [
+                'result' => 1,
+                1
+            ],
+            [
+                'result' => 1,
+                1, 1
+            ],
+            [
+                'result' => 3,
+                1, 2
+            ],
+            [
+                'result' => 3,
+                1, 2, 2
+            ],
+            [
+                'result' => 5,
+                1, 4, 4, 1
+            ],
+            [
+                'result' => 14,
+                2, 8, 8, 4
+            ],
+            [
+                'result' => 128,
+                128
+            ],
+            [
+                'result' => 1168,
+                16, 1024, 128, 1024
+            ],
         ];
     }
 }
