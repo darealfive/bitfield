@@ -35,19 +35,32 @@ docker-tester-build: ## Builds the testing docker image
 	.
 
 .PHONY: docker-tester-run
-docker-tester-run: ## Runs PHP tests within a docker container
+docker-tester-run: ## Runs PHP-UNIT tests within a docker container
 	@printf "\e[1;35m"
-	@echo "┌───────────────────────────────────────────┐"
-	@echo "│ Running PHP tests via docker container... │"
-	@echo "└───────────────────────────────────────────┘"
+	@echo "┌───────────────────────────┐"
+	@echo "│ Running PHP-UNIT tests... │"
+	@echo "└───────────────────────────┘"
 	@printf "\e[0m"
 	@make composer-install-dev && docker run \
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester)
 
+.PHONY: docker-tester-run-coverage
+docker-tester-run-coverage: ## Runs PHP-UNIT tests with code-coverage within a docker container
+	@printf "\e[1;35m"
+	@echo "┌───────────────────────────────────────────┐"
+	@echo "│ Running PHP-UNIT tests + code-coverage... │"
+	@echo "└───────────────────────────────────────────┘"
+	@printf "\e[0m"
+	@make composer-install-dev && docker run \
+	--rm \
+	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
+	$(docker_image_name_tester) \
+	tests --coverage-html=coverage
+
 .PHONY: docker-tester-build-run
-docker-tester-build-run: ## Build and runs PHP tests within a docker container
+docker-tester-build-run: ## Build and runs PHP-UNIT tests within a docker container
 	@make docker-tester-build && make docker-tester-run
 
 .PHONY: docker-tester-run-shell

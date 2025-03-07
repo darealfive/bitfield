@@ -10,12 +10,19 @@ declare(strict_types=1);
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Bit.php';
 
 use Darealfive\Bitfield\Bitfield;
+use Darealfive\Bitfield\BitfieldTrait;
+use Darealfive\Bitfield\FlaggableTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class BitfieldTest
  */
+#[UsesClass(FlaggableTrait::class)]
+#[UsesClass(BitfieldTrait::class)]
+#[CoversClass(Bitfield::class)]
 final class BitfieldTest extends TestCase
 {
     #[DataProvider('dataproviderValidConstructorArguments')]

@@ -8,12 +8,15 @@
 declare(strict_types=1);
 
 use Darealfive\Bitfield\Bitfield;
+use Darealfive\Bitfield\BitfieldTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class BitfieldTraitTest covers trait methods of {@link \Darealfive\Bitfield\BitfieldTrait}
  */
+#[CoversClass(BitfieldTrait::class)]
 final class BitfieldTraitTest extends TestCase
 {
     #[DataProvider('dataproviderValidBits')]
