@@ -41,6 +41,27 @@ final class FlaggableTraitTest extends TestCase
         $this->assertFalse((new Bitfield($bitfield))->hasFlags(...$flags));
     }
 
+    #[DataProvider('dataproviderFlagsMatch')]
+    public function testBitfieldHasFlagAny(int $bitfield, BackedEnum|int ...$flags): void
+    {
+        $this->assertTrue((new Bitfield($bitfield))->hasFlag(...$flags));
+    }
+
+    #[DataProvider('dataproviderFlagsMatchNot')]
+    public function testBitfieldHasFlagNot(int $bitfield, BackedEnum|int ...$flags): void
+    {
+        $this->assertFalse((new Bitfield($bitfield))->hasFlag(...$flags));
+    }
+
+    #[DataProvider('dataproviderFlagsMatchNot')]
+    public function testBitfieldAddFlag(int $bitfield, BackedEnum|int ...$flags): void
+    {
+        $flaggable = self::instantiateFlaggable($bitfield);
+        $this->assertFalse($flaggable->hasFlag(...$flags));
+        $flaggable->addFlag(...$flags);
+        $this->assertTrue($flaggable->hasFlag(...$flags));
+    }
+
     #[DataProvider('dataproviderIntegers')]
     public function testGetBitfield(int $integer): void
     {
@@ -142,6 +163,50 @@ final class FlaggableTraitTest extends TestCase
             [
                 'bitfield' => 1,
                 Bit::D_2, Bit::D_4, Bit::D_8, Bit::D_16
+            ],
+        ];
+    }
+
+    public static function dataproviderFlagsMatch(): array
+    {
+        return [
+            [
+                'bitfield' => array_sum($bitfield = [1, 2, 4, 8, 16]),
+                ...$bitfield
+            ],
+            [
+                'bitfield' => array_sum($bitfield = [1, 2, 8, 16]),
+                ...$bitfield
+            ],
+            [
+                'bitfield' => array_sum($bitfield = [2, 8]),
+                ...$bitfield
+            ],
+            [
+                'bitfield' => array_sum($bitfield = [8]),
+                ...$bitfield
+            ],
+        ];
+    }
+
+    public static function dataproviderFlagsMatchNot(): array
+    {
+        return [
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                32
+            ],
+            [
+                'bitfield' => 1 + 2 + 8 + 16,
+                4, 32
+            ],
+            [
+                'bitfield' => 2 + 8,
+                1, 4, 16, 32
+            ],
+            [
+                'bitfield' => 8,
+                1, 2, 4, 16, 32
             ],
         ];
     }

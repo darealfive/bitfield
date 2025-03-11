@@ -19,7 +19,7 @@ use BackedEnum;
 interface Flaggable
 {
     /**
-     * Sets bits.
+     * Sets one or several bits.
      *
      * @param int|BackedEnum $bit     a bit to be set
      * @param int|BackedEnum ...$bits additional bits to be set as well
@@ -29,7 +29,7 @@ interface Flaggable
     public function setFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static;
 
     /**
-     * Adds bits.
+     * Adds one or several bits.
      *
      * @param int|BackedEnum $bit     a bit to be added
      * @param int|BackedEnum ...$bits additional bits to be added as well
@@ -39,7 +39,7 @@ interface Flaggable
     public function addFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static;
 
     /**
-     * Deletes bits.
+     * Deletes one or several bits.
      *
      * @param int|BackedEnum $bit     a bit to be deleted
      * @param int|BackedEnum ...$bits additional bits to be deleted as well

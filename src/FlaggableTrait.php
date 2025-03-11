@@ -42,7 +42,7 @@ trait FlaggableTrait
 
     public function addFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static
     {
-        return $this->setFlag($this->getBitfield() | self::sumBits($bit, ...$bits));
+        return $this->setBitfield($this->getBitfield() | self::sumBits($bit, ...$bits));
     }
 
     public function delFlag(int|BackedEnum $bit, int|BackedEnum ...$bits): static

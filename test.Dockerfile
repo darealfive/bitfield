@@ -23,14 +23,13 @@ LABEL authors="Sebastian Krein"
 WORKDIR $WORKING_DIR
 # Provide composer to install dependencies directly within the app container
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
+# Runs a shell by default
+CMD ["/bin/sh"]
 
 
-###############################
-# PHP - execute phpunit tests #
-###############################
+###################################
+# PHP - used to run phpunit tests #
+###################################
 FROM base AS tester
 LABEL authors="Sebastian Krein"
-# Passes all arguments to phpunit
-ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint", "vendor/bin/phpunit"]
-# Runs all tests per default
-CMD ["tests"]

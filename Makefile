@@ -44,7 +44,8 @@ docker-tester-run: ## Runs PHP-UNIT tests within a docker container
 	@make composer-install-dev && docker run \
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
-	$(docker_image_name_tester)
+	$(docker_image_name_tester) \
+	vendor/bin/phpunit tests
 
 .PHONY: docker-tester-run-coverage
 docker-tester-run-coverage: ## Runs PHP-UNIT tests with code-coverage within a docker container
@@ -57,7 +58,7 @@ docker-tester-run-coverage: ## Runs PHP-UNIT tests with code-coverage within a d
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
-	tests --coverage-html=coverage
+	vendor/bin/phpunit tests --coverage-html=coverage
 
 .PHONY: docker-tester-build-run
 docker-tester-build-run: ## Build and runs PHP-UNIT tests within a docker container
@@ -73,7 +74,6 @@ docker-tester-run-shell: ## Runs a shell within the testing docker container
 	@docker run \
 	-it \
 	--rm \
-	--entrypoint /bin/sh \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester)
 
@@ -86,7 +86,6 @@ composer-install-dev: ## Installs PHP dev dependencies
 	@printf "\e[0m"
 	@docker run \
 	--rm \
-	--entrypoint composer \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
-	install
+	composer install
