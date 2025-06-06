@@ -91,6 +91,7 @@ trait FlaggableTrait
 
     /**
      * Gets the current bits as a list of <int> exponents mapped to either <int> 1 for "high" or <int> 0 for "low".
+     * If the current bitfield equals 0, then an empty array gets returned.
      *
      * @param Filterable|null $filterable optional filter to be applied on the returned bits
      *
@@ -98,9 +99,14 @@ trait FlaggableTrait
      */
     public function getBits(Type $type = Type::ARRAY_FILTER_USE_VALUE, ?Filterable $filterable = null): array
     {
+        $binary = $this->getBinary();
+        if ($binary === '0') {
+            return [];
+        }
+
         $bits = array_map(
             intval(...),
-            str_split($this->getBinary())
+            array_reverse(str_split($binary))
         );
 
         return $filterable?->filter($type, ...$bits) ?: $bits;
