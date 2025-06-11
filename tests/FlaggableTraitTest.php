@@ -1,6 +1,6 @@
 <?php
 /**
- * FlaggableTest class file
+ * FlaggableTraitTest class file
  *
  * @author Sebastian Krein <darealfive@gmx.de>
  */
@@ -20,7 +20,7 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class FlaggableTest covers interface methods of {@link Flaggable}
+ * Class FlaggableTraitTest covers interface methods of {@link Flaggable}
  */
 #[UsesClass(Bitfield::class)]
 #[UsesClass(BitfieldTrait::class)]

@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Darealfive\Bitfield\filter;
+
 /**
  * Exponent
  *
@@ -18,7 +19,7 @@ namespace Darealfive\Bitfield\filter;
  * This enum is particularly useful in scenarios where bitfield operations or filtering of numerical data
  * based on parity is required.
  *
- * @see Filterable
+ * @see    Filterable
  */
 enum Exponent implements Filterable
 {
@@ -34,7 +35,7 @@ enum Exponent implements Filterable
      */
     public function __invoke(int $exponent): bool
     {
-        $isEven = $exponent % 2;
+        $isEven = $exponent % 2 === 0;
 
         return match ($this) {
             self::EVEN => $isEven,
