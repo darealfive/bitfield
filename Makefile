@@ -11,7 +11,7 @@ makefile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 makefile_dir := $(dir $(makefile_path))
 docker_image_php_version := 8.1.31-cli-alpine3.21
 docker_image_composer_version := 2.7.6
-docker_image_version := v1.0.0
+docker_image_version := v1.2.1
 docker_image_name_tester := darealfive/bitfield-tester:$(docker_image_version)
 docker_image_working_dir := /php_library
 

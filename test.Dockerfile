@@ -23,6 +23,7 @@ LABEL authors="Sebastian Krein"
 WORKDIR $WORKING_DIR
 # Provide composer to install dependencies directly within the app container
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+RUN apk add --no-cache git
 ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
 # Runs a shell by default
 CMD ["/bin/sh"]
