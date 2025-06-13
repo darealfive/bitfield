@@ -11,6 +11,7 @@ namespace Darealfive\Bitfield;
 
 use Darealfive\Bitfield\filter\Filterable;
 use Darealfive\Bitfield\filter\Type;
+use ReturnTypeWillChange;
 
 trait IteratorAggregateTrait
 {
@@ -22,6 +23,7 @@ trait IteratorAggregateTrait
      * @return iterable<int,int>
      * @see BitfieldTrait::getBits()
      */
+    #[ReturnTypeWillChange]
     public function getIterator(Type $type = Type::ARRAY_FILTER_USE_VALUE, ?Filterable $filterable = null): array
     {
         return $this->getBits($type, $filterable);

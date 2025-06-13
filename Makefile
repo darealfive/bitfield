@@ -45,7 +45,9 @@ docker-tester-run: ## Runs PHP-UNIT tests within a docker container
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
-	vendor/bin/phpunit tests
+	vendor/bin/phpunit tests \
+	--display-deprecations \
+	--display-phpunit-deprecations
 
 .PHONY: docker-tester-run-coverage
 docker-tester-run-coverage: ## Runs PHP-UNIT tests with code-coverage within a docker container

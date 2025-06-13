@@ -103,11 +103,11 @@ final class FilterableTest extends TestCase
 
         return [
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                     ],
                     'bitsEven' => [
@@ -121,12 +121,12 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 0,
                     1 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         0 => 0
                     ],
@@ -142,12 +142,12 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                     ],
                     'bitsEven' => [
@@ -163,13 +163,13 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 0,
                     1 => 0,
                     2 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         0 => 0,
                         1 => 0,
@@ -187,13 +187,13 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         1 => 0,
                     ],
@@ -211,15 +211,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 0,
                     3 => 0,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         1 => 0,
                         2 => 0,
@@ -241,15 +241,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                     3 => 0,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         1 => 0,
                         3 => 0,
@@ -271,15 +271,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                     3 => 1,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         1 => 0,
                     ],
@@ -301,8 +301,8 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
@@ -312,7 +312,7 @@ final class FilterableTest extends TestCase
                     6 => 0,
                     7 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsLow'  => [
                         1 => 0,
                         5 => 0,
@@ -348,11 +348,11 @@ final class FilterableTest extends TestCase
 
         return [
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1
                     ],
@@ -361,12 +361,12 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 0,
                     1 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 0
                     ],
@@ -376,12 +376,12 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 1
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                     ],
@@ -391,13 +391,13 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 0,
                     1 => 0,
                     2 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 0,
                         2 => 1,
@@ -408,13 +408,13 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                         2 => 1,
@@ -425,15 +425,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 0,
                     3 => 0,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                         2 => 0,
@@ -446,15 +446,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                     3 => 0,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                         2 => 1,
@@ -467,15 +467,15 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
                     3 => 1,
                     4 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                         2 => 1,
@@ -488,8 +488,8 @@ final class FilterableTest extends TestCase
                 ],
             ],
             [
-                'filterType' => $filterType,
-                'bits'       => [
+                'type' => $filterType,
+                'bits' => [
                     0 => 1,
                     1 => 0,
                     2 => 1,
@@ -499,7 +499,7 @@ final class FilterableTest extends TestCase
                     6 => 0,
                     7 => 1,
                 ],
-                'data'       => [
+                'data' => [
                     'bitsEven' => [
                         0 => 1,
                         2 => 1,
