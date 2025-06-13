@@ -109,7 +109,7 @@ trait FlaggableTrait
             array_reverse(str_split($binary))
         );
 
-        return $filterable?->filter($type, ...$bits) ?: $bits;
+        return $filterable?->filter($type, ...$bits) ?? $bits;
     }
 
     /**

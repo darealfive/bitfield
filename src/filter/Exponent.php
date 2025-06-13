@@ -29,13 +29,13 @@ enum Exponent implements Filterable
     /**
      * Makes it callable so it can act as a filter for exponents, depending on whether they are EVEN or ODD.
      *
-     * @param int $exponent
+     * @param int $value
      *
      * @return bool
      */
-    public function __invoke(int $exponent): bool
+    public function __invoke(int $value): bool
     {
-        $isEven = $exponent % 2 === 0;
+        $isEven = $value % 2 === 0;
 
         return match ($this) {
             self::EVEN => $isEven,
