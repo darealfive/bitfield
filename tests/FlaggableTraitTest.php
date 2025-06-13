@@ -62,13 +62,13 @@ final class FlaggableTraitTest extends TestCase
         $this->assertTrue($flaggable->hasFlag(...$flags));
     }
 
-    #[DataProvider('dataproviderIntegers')]
+    #[DataProvider('dataproviderIntegersInclusiveZero')]
     public function testGetBitfield(int $integer): void
     {
         $this->assertSame($integer, (new Bitfield($integer))->getBitfield());
     }
 
-    #[DataProvider('dataproviderIntegers')]
+    #[DataProvider('dataproviderIntegersInclusiveZero')]
     public function testGetBinary(int $integer): void
     {
         $this->assertSame(decbin($integer), (new Bitfield($integer))->getBinary());
@@ -78,7 +78,7 @@ final class FlaggableTraitTest extends TestCase
      * Tests that "setFlag" overwrites existing flags with the desired flag
      */
     #[Depends('testHasFlag')]
-    #[DataProvider('dataproviderIntegers')]
+    #[DataProvider('dataproviderIntegersExclusiveZero')]
     public function testSetFlag(int $integer): void
     {
         $flaggableOriginal = self::instantiateFlaggable($integer);
@@ -112,7 +112,7 @@ final class FlaggableTraitTest extends TestCase
         }
     }
 
-    #[DataProvider('dataproviderIntegers')]
+    #[DataProvider('dataproviderIntegersInclusiveZero')]
     public function testHasFlag(int $integer): void
     {
         $flaggable      = self::instantiateFlaggable($integer);
