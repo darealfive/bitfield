@@ -60,7 +60,11 @@ docker-tester-run-coverage: ## Runs PHP-UNIT tests with code-coverage within a d
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
-	vendor/bin/phpunit tests --coverage-html=coverage
+	vendor/bin/phpunit tests \
+	--display-all-issues \
+	--order-by random \
+	--coverage-html=$(docker_image_working_dir)/tests/coverage \
+	--coverage-filter=$(docker_image_working_dir)/src
 
 .PHONY: docker-tester-build-run
 docker-tester-build-run: ## Build and runs PHP-UNIT tests within a docker container

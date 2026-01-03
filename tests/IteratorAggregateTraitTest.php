@@ -11,16 +11,17 @@ use Darealfive\Bitfield\Bitfield;
 use Darealfive\Bitfield\filter\Bit as BitFilter;
 use Darealfive\Bitfield\filter\Type;
 use Darealfive\Bitfield\FlaggableTrait;
+use Darealfive\Bitfield\IteratorAggregateTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class IteratorAggregateTraitTest covers interface methods of {@link \Darealfive\Bitfield\IteratorAggregateTrait}
+ * Class IteratorAggregateTraitTest covers interface methods of {@link IteratorAggregateTrait}
  */
 #[CoversClass(FlaggableTrait::class)]
-#[CoversClass(IteratorAggregateTraitTest::class)]
+#[CoversClass(IteratorAggregateTrait::class)]
 final class IteratorAggregateTraitTest extends TestCase
 {
     public function testGetIteratorReturnsArray(): void

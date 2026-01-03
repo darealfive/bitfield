@@ -23,10 +23,13 @@ LABEL authors="Sebastian Krein"
 WORKDIR $WORKING_DIR
 # Provide composer to install dependencies directly within the app container
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-RUN apk add --no-cache git
+RUN apk add --no-cache git linux-headers $PHPIZE_DEPS \
+    && pecl install xdebug-3.4.4 \
+    && docker-php-ext-enable xdebug
 ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
 # Runs a shell by default
 CMD ["/bin/sh"]
+ENV XDEBUG_MODE=coverage
 
 
 ###################################
