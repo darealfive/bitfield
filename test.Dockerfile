@@ -26,10 +26,15 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN apk add --no-cache git linux-headers $PHPIZE_DEPS \
     && pecl install xdebug-3.4.4 \
     && docker-php-ext-enable xdebug
+RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+COPY <<'XDEBUG_INI' /usr/local/etc/php/conf.d/99-xdebug.ini
+xdebug.client_host=docker.for.mac.localhost
+start_with_request=yes
+XDEBUG_INI
 ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
 # Runs a shell by default
 CMD ["/bin/sh"]
-ENV XDEBUG_MODE=coverage
+ENV XDEBUG_MODE=debug,coverage
 
 
 ###################################
