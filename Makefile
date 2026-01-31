@@ -1,4 +1,7 @@
 .DEFAULT_GOAL := help
+XDEBUG_CLIENT_HOST ?= docker.for.mac.localhost
+# ENV_XDEBUG_MODE controls xdebug.mode (develop|profile|debug|off|coverage|...) of the image to run.
+ENV_XDEBUG_MODE ?= off
 
 # magic help command
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -29,6 +32,7 @@ docker-tester-build: ## Builds the testing docker image
 	--build-arg COMPOSER_VERSION=$(docker_image_composer_version) \
 	--build-arg PHP_VERSION=$(docker_image_php_version) \
 	--build-arg WORKING_DIR=$(docker_image_working_dir) \
+	--build-arg XDEBUG_CLIENT_HOST=$(XDEBUG_CLIENT_HOST) \
 	-t $(docker_image_name_tester) \
 	-f test.Dockerfile \
 	--target tester \
@@ -42,6 +46,7 @@ docker-tester-run: composer-install-dev ## Runs PHP-UNIT tests within a docker c
 	@echo "└───────────────────────────┘"
 	@printf "\e[0m"
 	@docker run \
+	--env ENV_XDEBUG_MODE=$(ENV_XDEBUG_MODE) \
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
@@ -57,13 +62,14 @@ docker-tester-run-coverage: composer-install-dev ## Runs PHP-UNIT tests with cod
 	@echo "└───────────────────────────────────────────┘"
 	@printf "\e[0m"
 	@docker run \
+	--env ENV_XDEBUG_MODE=coverage \
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \
 	$(docker_image_name_tester) \
 	vendor/bin/phpunit tests \
 	--display-all-issues \
 	--order-by random \
-	--coverage-html=$(docker_image_working_dir)/tests/coverage \
+	--coverage-html=$(docker_image_working_dir)/xdebug/coverage \
 	--coverage-filter=$(docker_image_working_dir)/src
 
 .PHONY: docker-tester-build-run
@@ -77,6 +83,7 @@ docker-tester-run-shell: ## Runs a shell within the testing docker container
 	@echo "└────────────────────┘"
 	@printf "\e[0m"
 	@docker run \
+	--env ENV_XDEBUG_MODE=$(ENV_XDEBUG_MODE) \
 	-it \
 	--rm \
 	--volume "$(makefile_dir)":"$(docker_image_working_dir)" \

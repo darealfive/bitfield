@@ -1,0 +1,5 @@
+# "xdebug.mode=coverage"
+coverage
+xdebug.log
+# "xdebug.mode=profile"
+cachegrind.out.*

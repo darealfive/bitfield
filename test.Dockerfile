@@ -17,24 +17,29 @@ FROM composer:$COMPOSER_VERSION AS composer
 # PHP - base #
 ##############
 FROM php:$PHP_VERSION AS base
-ARG WORKING_DIR
 LABEL authors="Sebastian Krein"
 # Specifies the build directory where we want to develop/test
-WORKDIR $WORKING_DIR
 # Provide composer to install dependencies directly within the app container
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN apk add --no-cache git linux-headers $PHPIZE_DEPS \
     && pecl install xdebug-3.4.4 \
     && docker-php-ext-enable xdebug
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
-COPY <<'XDEBUG_INI' /usr/local/etc/php/conf.d/99-xdebug.ini
-xdebug.client_host=docker.for.mac.localhost
-start_with_request=yes
+ARG XDEBUG_CLIENT_HOST
+ARG WORKING_DIR
+COPY <<XDEBUG_INI /usr/local/etc/php/conf.d/99-xdebug.ini
+xdebug.client_host=$XDEBUG_CLIENT_HOST
+xdebug.output_dir=$WORKING_DIR/xdebug
+xdebug.log=$WORKING_DIR/xdebug/xdebug.log
+xdebug.mode=\${ENV_XDEBUG_MODE}
 XDEBUG_INI
+ENV ENV_XDEBUG_MODE='off'
 ENTRYPOINT ["/usr/local/bin/docker-php-entrypoint"]
 # Runs a shell by default
 CMD ["/bin/sh"]
-ENV XDEBUG_MODE=debug,coverage
+WORKDIR $WORKING_DIR
+# If image is used standalone (no bind mount), this is required to avoid xdebug complaing about none existing folder
+RUN mkdir xdebug
 
 
 ###################################
