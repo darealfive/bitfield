@@ -150,6 +150,18 @@ final class FlaggableTraitTest extends TestCase
                 'bitfield' => 1 + 2 + 4 + 8 + 16,
                 Bit::D_8
             ],
+            [
+                'bitfield' => 8,
+                Bit::D_8
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                Bit::D_16
+            ],
+            [
+                'bitfield' => 16,
+                Bit::D_16
+            ],
         ];
     }
 
@@ -186,6 +198,26 @@ final class FlaggableTraitTest extends TestCase
                 'bitfield' => array_sum($bitfield = [8]),
                 ...$bitfield
             ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                4
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                1
+            ],
+            [
+                'bitfield' => 1 + 2 + 4 + 8 + 16,
+                16
+            ],
+            [
+                'bitfield' => 2 + 4 + 8,
+                8
+            ],
+            [
+                'bitfield' => 4,
+                4
+            ],
         ];
     }
 
@@ -207,6 +239,14 @@ final class FlaggableTraitTest extends TestCase
             [
                 'bitfield' => 8,
                 1, 2, 4, 16, 32
+            ],
+            [
+                'bitfield' => 8,
+                1
+            ],
+            [
+                'bitfield' => 8,
+                1, 4
             ],
         ];
     }
